@@ -11,8 +11,7 @@ function dlnet_fwd = f_gen_fwd(pram)
                                psf_ex,psf_em,...
                                E,...
                                Illum,...
-                               pram.amp,pram.binR,pram.mu_rd,pram.sd_rd)
-                               
+                               pram.amp,pram.binR,pram.mu_rd,pram.sd_rd)                               
                  ];
   lgraph_fwd  = layerGraph(layers_fwd);
   dlnet_fwd   = dlnetwork(lgraph_fwd);
