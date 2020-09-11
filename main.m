@@ -1,5 +1,6 @@
 %% observations (delete after addressing)
 % 20200909: the genPrior network needs improvement. It seems to work better without gen prior.
+% grad discent optimizer needs to be more sofisticated specissly the finite difference
 
 %%
 clc; clear all; close all
@@ -20,7 +21,8 @@ dlnet_gen       = f_get_gen(pram,net_autoEnc);
 % imagesc(imtile([XhatTest.extractdata]))
 
 %% image using the fwd model
-pram.amp     = 1e9; % scaling factor from measured images to images in [0 1]
+pram = pram_init()
+pram.amp     = 1e6; % scaling factor from measured images to images in [0 1]
 pram.mu_rd   = 10;
 pram.sd_rd   = 0;
 pram.binR    = floor(sqrt(pram.compression_fwd*pram.Nt));
@@ -35,7 +37,12 @@ Yhat            = predict(dlnet_fwd,dlXTest);
 [Xhat_genPrior,opt_info] = f_rec_genPrior(pram,dlnet_fwd,dlnet_gen,Yhat,dlXTest);
 [Xhat_noPrior ,opt_info] = f_rec_noPrior(pram,dlnet_fwd,Yhat,dlXTest);
 
-subplot(1,3,1);imagesc(X.Test(:,:,1,1));                    axis image
-subplot(1,3,2);imagesc(Xhat_genPrior(:,:,1,1).extractdata); axis image
-subplot(1,3,3);imagesc(Xhat_noPrior(:,:,1,1).extractdata) ; axis image
+subplot(1,3,1);imagesc(dlXTest(:,:,1,1).extractdata);       axis image; axis off
+subplot(1,3,2);imagesc(Xhat_genPrior(:,:,1,1).extractdata); axis image; axis off
+subplot(1,3,3);imagesc(Xhat_noPrior(:,:,1,1).extractdata) ; axis image; axis off
+
+savepath      = ['./__results/' date '/'];
+mkdir(savepath)
+fileNameStem  = sprintf('prior_vs_noPrior_DMDSim_Ny%d_Nx%d_Nt%d_comp%dx',pram.Ny,pram.Nx,pram.Nt,pram.compression_fwd)
+saveas(gcf,[savepath fileNameStem '_fig.jpeg']);
 
