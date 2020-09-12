@@ -3,7 +3,7 @@ function pram = pram_init()
 
   %% names
   pram.mic_typ      = 'DMD';          % {'DMD','WGD'}
-  pram.pattern_typ  = 'dmd_sim_rnd';      % {'dmd_sim_rnd','dmd_exp','wgd_sim','wgd_exp'}
+  pram.pattern_typ  = 'dmd_sim_rnd';  % {'dmd_sim_rnd','dmd_exp','wgd_sim','wgd_exp'}
   pram.dataset      = 'minist';       % {'minist','cells_dapi','cells_h2ax'}
   pram.psf_typ      = 'gaussian';     % {'gaussian',...}
   
@@ -37,5 +37,5 @@ function pram = pram_init()
   pram.learningRateFactor = .1;
   pram.dropPeriod         = round(pram.maxEpochs/4);
   pram.l2reg              = 0.0001;
-  pram.excEnv             = 'multi-gpu';              % {'auto','gpu','multi-gpu'}
+  pram.excEnv             = 'auto';                 % {'auto','gpu','multi-gpu'}
 end
