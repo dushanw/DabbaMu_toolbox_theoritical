@@ -3,8 +3,10 @@ function [Xhat, opt_info] = f_rec_genPrior(pram,dlnet_fwd,dlnet_gen,Yhat,X0)
 
   alpha = dlarray(rand(1,1,pram.Ncompressed_gen,size(Yhat,4)),'SSCB');
   
-  delta_alpha = 1e-3;
-  for i=1:10000
+  Nitr        = 2000;
+  delta_alpha = 1e-2*ones(1,Nitr);
+  delta_alpha(Nitr/2:end) = delta_alpha(1)/10;
+  for i=1:Nitr
     if rem(i-1,50)==0
        Xhat    = predict(dlnet_gen,alpha);
        if ~isempty(X0)
@@ -19,7 +21,7 @@ function [Xhat, opt_info] = f_rec_genPrior(pram,dlnet_fwd,dlnet_gen,Yhat,X0)
     opt_info.track_cost(i)  = C.extractdata;
     opt_info.trac_grad(i)   = max(dC_dAlpha(:).extractdata); 
 
-    alpha                   = alpha - delta_alpha*dC_dAlpha;  
+    alpha                   = alpha - delta_alpha(i)*dC_dAlpha;  
     fprintf('%d: Cost = %d\n',i,opt_info.track_cost(i))
   end
 end
