@@ -17,7 +17,7 @@ Models.dlnetDiscriminator  = f_gen_stdDisc(pram);
 [nets info] = f_train_gan(X.Train,X.Val,Models,trOptions);
 dlnet_gen   = nets.dlnetGenerator;  
 
-XhatTest    = predict(dlnet_gen,dlarray(10*rand(1,1,pram.Ncompressed_gen,100),'SSCB'));
-imagesc(imtile([XhatTest.extractdata]))
+XhatTest    = predict(dlnet_gen,gpuArray(dlarray(rand(1,1,pram.Ncompressed_gen,100,'single'),'SSCB')));
+figure;imagesc(imtile([XhatTest.extractdata]))
 
 
