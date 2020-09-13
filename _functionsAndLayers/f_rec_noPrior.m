@@ -4,7 +4,10 @@ function [Xhat, opt_info] = f_rec_noPrior(pram,dlnet_fwd,Yhat,X0)
   Xhat = dlarray(single(rand(pram.Ny,pram.Nx,pram.Nc,size(Yhat,4))),'SSCB');
   
   delta_X = 1e-2;
-  for i=1:2000
+  
+  averageGrad_Xhat   = [];
+  averageSqGrad_Xhat = [];  
+  for i=1:10000
     if rem(i-1,50)==0
        if ~isempty(X0)
          imagesc(imtile([rescale(X0.extractdata) rescale(Xhat.extractdata) rescale(imresize(Yhat(:,:,1,:).extractdata,[pram.Ny pram.Nx],'nearest'))]));axis image
@@ -18,7 +21,9 @@ function [Xhat, opt_info] = f_rec_noPrior(pram,dlnet_fwd,Yhat,X0)
     opt_info.track_cost(i)  = C.extractdata;
     opt_info.trac_grad(i)   = max(dC_dX(:).extractdata); 
 
-    Xhat                    = Xhat - delta_X*dC_dX;
+    [Xhat,averageGrad_Xhat,averageSqGrad_Xhat] = adamupdate(Xhat,dC_dX,averageGrad_Xhat,averageSqGrad_Xhat,i,...
+                                                               0.01/log10(i+1));    
+    % Xhat                    = Xhat - delta_X*dC_dX;
     fprintf('%d: Cost = %d\n',i,opt_info.track_cost(i))
   end
 end
