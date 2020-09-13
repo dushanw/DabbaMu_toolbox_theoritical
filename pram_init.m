@@ -15,7 +15,7 @@ function pram = pram_init()
 
   %% compression parameters
   pram.compression_gen = 32;
-  pram.compression_fwd = 4;
+  pram.compression_fwd = 16;
   
   pram.Ncompressed_gen = pram.Nx*pram.Ny/pram.compression_gen;            % dim non-linear feature space
   pram.Ncompressed_fwd = pram.Nx*pram.Ny/(pram.Nt*pram.compression_fwd);  % dim measurement space
