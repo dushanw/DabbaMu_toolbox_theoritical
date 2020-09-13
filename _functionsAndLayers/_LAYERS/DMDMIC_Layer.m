@@ -49,14 +49,16 @@ classdef DMDMIC_Layer < nnet.layer.Layer
                               'DataFormat','SSCB');                    % averaged image
           Y         = Y.*(layer.binR^2);                               % multiply by pixels in the bin for sum image  
 
-          % Add noise                        
-          N_norm    = normrnd(0,1,size(Y));
-          N_read    = normrnd(layer.mu_rd,layer.sd_rd,size(Y));
+%           % Add noise                        
+%           N_norm    = normrnd(0,1,size(Y));
+%           N_read    = normrnd(layer.mu_rd,layer.sd_rd,size(Y));
+% 
+%           Y_poiss   = sqrt(Y/layer.amp) .* N_norm + Y;                % add poisson noise (with gaussian approximatoin)
+%           Y_rd      = Y_poiss + N_read/layer.amp;                     % add read noise
+% 
+%           Yhat      = Y_rd;
 
-          Y_poiss   = sqrt(Y/layer.amp) .* N_norm + Y;                % add poisson noise (with gaussian approximatoin)
-          Y_rd      = Y_poiss + N_read/layer.amp;                     % add read noise
-
-          Yhat      = Y_rd;
+           Yhat =Y;% no noise mode 
         end
 
         function Aimp = getImplementableEX(layer,A)          
