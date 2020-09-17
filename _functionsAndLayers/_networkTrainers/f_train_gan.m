@@ -13,9 +13,11 @@ function [nets info] = f_train_gan(XTrain,XVal,Models,opt)
   dlnetDiscriminator  = Models.dlnetDiscriminator;
   flipFactor          = opt.flipFactor;
   
-  dlXVal              = dlarray(XVal  ,'SSCB');
-  ZVal                = randn([dlnetGenerator.Layers(1).InputSize size(XVal,4)],'single');
-  dlZVal              = dlarray(ZVal,'SSCB');
+  XVal    = XVal(:,:,:,1:8); % display only 4 instances while training
+  XVal    = rescale(XVal,-1,1,'InputMin',0,'InputMax',2);                       % Rescale the images in the range [-1 1].
+  dlXVal  = dlarray(XVal,'SSCB');
+  ZVal    = randn([dlnetGenerator.Layers(1).InputSize size(XVal,4)],'single');
+  dlZVal  = dlarray(ZVal,'SSCB');
   
   if (opt.executionEnvironment == "auto" && canUseGPU) || opt.executionEnvironment == "gpu"
     dlXVal  = gpuArray(dlXVal);        
@@ -77,10 +79,10 @@ function [nets info] = f_train_gan(XTrain,XVal,Models,opt)
         dlXGeneratedValidation  = predict(dlnetGenerator,dlZVal);
 
         I = imtile(cat(2,extractdata(dlXVal),extractdata(dlXGeneratedValidation),zeros(size(dlXVal,1),10,1,size(dlXVal,4))));
-        I = rescale(I);
+        % I = rescale(I);
         
         subplot(1,2,1);
-        imagesc(imageAxes,I)
+        imagesc(imageAxes,I);axis image;colorbar;
         xticklabels([]);
         yticklabels([]);
         title("Generated Images");
