@@ -1,11 +1,11 @@
 
 function [Xhat, opt_info] = f_rec_genPrior(pram,dlnet_fwd,dlnet_gen,Yhat,X0)
 
-  alpha = dlarray(rand(1,1,pram.Ncompressed_gen,size(Yhat,4),'single'),'SSCB');
+  alpha = dlarray(rand(1,1,pram.Ncompressed_gen,size(Yhat,4),'single')-.5,'SSCB');
   alpha = gpuArray(alpha);
   
-  delta_alpha0= 2e-5;
-  Nitr        = 50000;
+  delta_alpha0= 1e-3;
+  Nitr        = 10000;
   delta_alpha = delta_alpha0*ones(1,Nitr);
   delta_alpha(Nitr/2:end) = delta_alpha(1)/10;
   

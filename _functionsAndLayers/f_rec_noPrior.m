@@ -3,7 +3,7 @@ function [Xhat, opt_info] = f_rec_noPrior(pram,dlnet_fwd,Yhat,X0)
 
   Xhat = dlarray(single(rand(pram.Ny,pram.Nx,pram.Nc,size(Yhat,4))),'SSCB');
   
-  delta_X = 1e-2;
+  delta_X = 1e-3;
   
   averageGrad_Xhat   = [];
   averageSqGrad_Xhat = [];  
