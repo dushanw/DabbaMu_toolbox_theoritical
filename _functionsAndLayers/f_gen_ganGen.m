@@ -2,7 +2,8 @@
 % Generator network for GAN (same network in the example: https://www.mathworks.com/help/deeplearning/ug/train-generative-adversarial-network.html)
 
 function dlnetGenerator = f_gen_ganGen(pram)
-
+  
+  % only work for the sizes 32 (with tconv4 stride 1) and 64 (with tconv4 stride 2)
   numFilters      = pram.numFilters;
   numLatentInputs = pram.Ncompressed_gen;
 
@@ -21,6 +22,7 @@ function dlnetGenerator = f_gen_ganGen(pram)
       transposedConv2dLayer(filterSize,numFilters,'Stride',2,'Cropping','same','Name','tconv3')
       batchNormalizationLayer('Name','bnorm3')
       reluLayer('Name','relu3')
+      % transposedConv2dLayer(filterSize,1,'Stride',1,'Cropping','same','Name','tconv4')
       transposedConv2dLayer(filterSize,1,'Stride',2,'Cropping','same','Name','tconv4')
       tanhLayer('Name','tanh')];
 
