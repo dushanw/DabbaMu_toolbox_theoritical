@@ -2,6 +2,8 @@
 % test a deep autoencoder 
 
 cd('../')
+
+clear all; close all; clc
 addpath(genpath('./_functionsAndLayers/'))
 addpath('./_Datasets/')
 addpath('./_ExtPatternsets/')
@@ -11,7 +13,7 @@ X         = f_get_dataset(pram);
 trOptions = f_set_training_options_gan(pram);
 
 %Models.dlnetGenerator      = f_gen_ganDeepGen(pram);
-Models.dlnetGenerator      = f_gen_ganGen(pram);
+Models.dlnetGenerator      = f_gen_stdGen(pram);
 Models.dlnetDiscriminator  = f_gen_stdDisc(pram);
 % analyzeNetwork(layerGraph(Models.dlnetGenerator))
 
