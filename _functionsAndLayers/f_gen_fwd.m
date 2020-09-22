@@ -1,9 +1,9 @@
 
-function dlnet_fwd = f_gen_fwd(pram)
+function [dlnet_fwd Y_exp] = f_gen_fwd(pram)
 
   Illum             = ones([pram.Ny pram.Nx]);               % illumination 
   [psf_ex, psf_em]  = f_get_psfs(pram);           % psfs
-  E                 = f_get_extPettern(pram);     % excitation pattern
+  [E Y_exp]         = f_get_extPettern(pram);     % excitation pattern
 
   layers_fwd  = [
                   imageInputLayer([pram.Ny pram.Nx pram.Nc],'Normalization','none','Name','fwd_in')
