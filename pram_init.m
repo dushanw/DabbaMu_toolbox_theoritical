@@ -3,8 +3,10 @@ function pram = pram_init()
 
   %% names
   pram.mic_typ      = 'DMD';                            % {'DMD','WGD'}
-  pram.pattern_typ  = 'dmd_sim_rnd';                    % {'dmd_sim_rnd','dmd_exp','wgd_sim','wgd_exp'}
-  pram.dataset      = 'andrewCells_fociW3_63x_maxProj'; % {'minist','andrewCells_fociW3_63x_maxProj','andrewCells_dapi_20x_maxProj','cells_h2ax'}
+  pram.pattern_typ  = 'dmd_exp_tfm';                    % {'dmd_sim_rnd','dmd_exp','dmd_exp_tfm','wgd_sim','wgd_exp'}
+  pram.dataset      = 'andrewCells_fociW3_63x_maxProj'; % {'minist',
+                                                        %  'andrewCells_fociW3_63x_maxProj',
+                                                        %  'andrewCells_dapi_20x_maxProj',}
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
   
   %% data size parameters

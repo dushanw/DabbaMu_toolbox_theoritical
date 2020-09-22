@@ -23,6 +23,10 @@ function [E Y_exp] = f_get_extPettern(pram)
       Y_exp = Y_exp(1:pram.Ny,1:pram.Nx,1:pram.Nt);   
       % Y_exp = Y_exp - min(Y_exp(:));
       Y_exp = Y_exp./max(Y_exp(:));
+    case 'dmd_exp_tfm'
+      load dmd_exp_tfm_mouseBrain_20200903.mat      
+      E     = imresize(Data.Ex(:,:,1:pram.Nt)   ,[pram.Ny pram.Nx]);
+      Y_exp = imresize(Data.z_200um(:,:,1:pram.Nt),[pram.Ny pram.Nx]);
   end
 
 end
