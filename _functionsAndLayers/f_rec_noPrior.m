@@ -1,9 +1,14 @@
 
 function [Xhat, opt_info] = f_rec_noPrior(pram,dlnet_fwd,Yhat,X0)
 
-  Xhat = dlarray(single(rand(pram.Ny,pram.Nx,pram.Nc,size(Yhat,4))),'SSCB');
+  try 
+    Xhat = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat(:,:,:,1).extractdata,[]);
+    Xhat = dlarray(single(cat(4,Xhat,Xhat)),'SSCB');
+  catch
+    Xhat = dlarray(single(rand(pram.Ny,pram.Nx,pram.Nc,size(Yhat,4))),'SSCB');
+  end
   
-  delta_X = 1e-3;
+  delta_X = 1e-1;
   
   averageGrad_Xhat   = [];
   averageSqGrad_Xhat = [];  
