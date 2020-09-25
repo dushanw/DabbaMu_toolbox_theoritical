@@ -10,14 +10,14 @@ function pram = pram_init()
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
   
   %% data size parameters
-  pram.Nx      = 32;
-  pram.Ny      = 32;
+  pram.Nx      = 64;
+  pram.Ny      = 64;
   pram.Nc      = 1;
-  pram.Nt      = 16;
+  pram.Nt      = 1020;
 
   %% compression parameters
   pram.compression_gen = 64;
-  pram.compression_fwd = 1;
+  pram.compression_fwd = 1/1020;
   
   pram.Ncompressed_gen = pram.Nx*pram.Ny/pram.compression_gen;            % dim non-linear feature space
   pram.Ncompressed_fwd = pram.Nx*pram.Ny/(pram.Nt*pram.compression_fwd);  % dim measurement space
