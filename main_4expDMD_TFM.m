@@ -2,7 +2,7 @@
 % test for real data
 
 clc; clear all; close all
-addpath('./_functionsAndLayers/')
+addpath(genpath('./_functionsAndLayers/'))
 addpath('./_Datasets/')
 addpath('./_ExtPatternsets/')
 
@@ -11,7 +11,11 @@ pram  = pram_init();
 
 [dlnet_fwd Yhat]  = f_gen_fwd(pram);
 
-Xhat = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat,[]);
+Xhat_noPr = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat,[]);
+Xhat_wlPr = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat);      % wavelet prior
+ 
+imagesc([rescale(Xhat_noPr) rescale(Xhat_wlPr)]);axis image;colormap hot
+
 
 Yacq  = Yhat;
 Yacq  = Yacq - min(Yacq(:));
