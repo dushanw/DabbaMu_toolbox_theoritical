@@ -8,7 +8,7 @@ function [Xhat, opt_info] = f_rec_noPrior(pram,dlnet_fwd,Yhat,X0)
     Xhat = dlarray(single(rand(pram.Ny,pram.Nx,pram.Nc,size(Yhat,4))),'SSCB');
   end
   
-  delta_X = 1e-1;
+  delta_X = 1e-0;
   
   averageGrad_Xhat   = [];
   averageSqGrad_Xhat = [];  

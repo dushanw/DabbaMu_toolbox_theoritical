@@ -3,21 +3,28 @@ function pram = pram_init()
 
   %% names
   pram.mic_typ      = 'DMD';                            % {'DMD','WGD'}
-  pram.pattern_typ  = 'dmd_exp_tfm';                    % {'dmd_sim_rnd','dmd_exp','dmd_exp_tfm','wgd_sim','wgd_exp'}
-  pram.dataset      = 'andrewCells_fociW3_63x_maxProj'; % {'minist',
+  pram.pattern_typ  = 'dmd_exp_tfm_beads_8';            % {'dmd_sim_rnd',
+                                                        %  'dmd_exp',
+                                                        %  'dmd_exp_tfm',
+                                                        %  'dmd_exp_tfm_beads_4',
+                                                        %  'dmd_exp_tfm_beads_8',
+                                                        %  'wgd_sim',
+                                                        %  'wgd_exp'
+                                                        % }
+  pram.dataset      = 'minist';                         % {'minist',
                                                         %  'andrewCells_fociW3_63x_maxProj',
                                                         %  'andrewCells_dapi_20x_maxProj',}
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
   
   %% data size parameters
-  pram.Nx      = 64;
-  pram.Ny      = 64;
+  pram.Nx      = 256;
+  pram.Ny      = 256;
   pram.Nc      = 1;
-  pram.Nt      = 1020;
+  pram.Nt      = 200;
 
   %% compression parameters
-  pram.compression_gen = 64;
-  pram.compression_fwd = 1/1020;
+  pram.compression_gen = 256;
+  pram.compression_fwd = 1/pram.Nt;
   
   pram.Ncompressed_gen = pram.Nx*pram.Ny/pram.compression_gen;            % dim non-linear feature space
   pram.Ncompressed_fwd = pram.Nx*pram.Ny/(pram.Nt*pram.compression_fwd);  % dim measurement space

@@ -15,7 +15,10 @@ function Xhat = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat,X0)
   A = sparse(i_vec,j_vec,s_vec,pram.Ny*pram.Nx*pram.Nt,pram.Ny*pram.Nx);
 
   % solve for X using left devide (i.e. psudo inverse)
-  Xhat = A\Yhat(:);  
+  
+  Xhat = A\Yhat(:);                 % solve original system  
+  Xhat = (A'*A)\(A'*Yhat(:));       % solve reduced systems by At
+  
   Xhat = reshape(Xhat,pram.Ny,pram.Nx);
 
   if ~isempty(X0)
@@ -27,6 +30,7 @@ function Xhat = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat,X0)
   else
     imagesc(imtile([rescale(Xhat) ...
                     rescale(imresize(Yhat(:,:,1,:),[pram.Ny pram.Nx],'nearest'))...
+                    rescale(imresize(mean(Yhat,3) ,[pram.Ny pram.Nx],'nearest'))...
                   ]));
     axis image
   end

@@ -25,7 +25,7 @@ function Xhat = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat)
 
   n = size(A,2);
 
-  gamma = 3.4e-3;       % the reconstruction is sensitive to the weight of the regularizer (for 64x64 gamma=3e-3 seems to work)
+  gamma = 1e-3;       % the reconstruction is sensitive to the weight of the regularizer (for 64x64 gamma=3e-3 seems to work)
   Psy   = inv(getWaveletmatrices(pram.Ny,pram.Nx));
 
 %    w = diag(sqrt(1./(y+1)));

@@ -1,5 +1,5 @@
 
-function [E Y_exp] = f_get_extPettern(pram)
+function [E Y_exp X_refs] = f_get_extPettern(pram)
 
   switch pram.pattern_typ
     case 'dmd_sim_rnd'
@@ -25,8 +25,32 @@ function [E Y_exp] = f_get_extPettern(pram)
       Y_exp = Y_exp./max(Y_exp(:));
     case 'dmd_exp_tfm'
       load dmd_exp_tfm_mouseBrain_20200903.mat      
-      E     = imresize(Data.Ex(:,:,1:pram.Nt)   ,[pram.Ny pram.Nx]);
+      E     = imresize(Data.Ex(:,:,1:pram.Nt)     ,[pram.Ny pram.Nx]);
       Y_exp = imresize(Data.z_200um(:,:,1:pram.Nt),[pram.Ny pram.Nx]);
+    case 'dmd_exp_tfm_beads_4'
+      load dmd_exp_tfm_beads_20200925.mat
+      E     = imresize(single(Data.Ex_4    (:,:,2:pram.Nt+1)) ,[pram.Ny pram.Nx]);
+      Y_exp = imresize(single(Data.beads1_4(:,:,2:pram.Nt+1)) ,[pram.Ny pram.Nx]);  
+    case 'dmd_exp_tfm_beads_8'
+      load dmd_exp_tfm_beads_20200925.mat
+      E     = imresize(single(Data.Ex_8    (:,:,2:pram.Nt+1)) ,[pram.Ny pram.Nx]);
+      Y_exp = imresize(single(Data.beads2_8(:,:,2:pram.Nt+1)) ,[pram.Ny pram.Nx]);
+      X0    = imresize(single(Data.beads2_wf0)                ,[pram.Ny pram.Nx]);
+      Xwf   = imresize(single(Data.beads2_wf(:,:,2:pram.Nt+1)),[pram.Ny pram.Nx]);
+      % normalize
+      E     = E     -  mean(E    ,   3);
+      E     = E     ./ max (E    ,[],3);
+      
+      Y_exp = Y_exp -  mean(Y_exp,   3);
+      Y_exp = Y_exp ./ max (Y_exp(:)  ); 
+      
+      X0    = X0    ./ max (X0(:)     );      
+      
+      Xwf   = mean(Xwf,3);
+      Xwf   = Xwf   ./ max (Xwf(:)    );      
+      
+      X_refs.X0   = X0;
+      X_refs.Xwf  = Xwf;
   end
 
 end

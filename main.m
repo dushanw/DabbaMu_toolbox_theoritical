@@ -70,5 +70,3 @@ savepath      = ['./__results/' date '/'];
 mkdir(savepath)
 fileNameStem  = sprintf('prior_vs_noPrior_noised_1e3_DMDSim_Ny%d_Nx%d_Nt%d_comp%dx',pram.Ny,pram.Nx,pram.Nt,pram.compression_fwd)
 saveas(gcf,[savepath fileNameStem '_fig.jpeg']);
-
-

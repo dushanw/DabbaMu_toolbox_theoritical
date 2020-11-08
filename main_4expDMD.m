@@ -2,7 +2,7 @@
 % test for real data
 
 clc; clear all; close all
-addpath('./_functionsAndLayers/')
+addpath(genpath('./_functionsAndLayers/'))
 addpath('./_Datasets/')
 addpath('./_ExtPatternsets/')
 
