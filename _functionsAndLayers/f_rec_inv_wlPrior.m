@@ -25,7 +25,7 @@ function Xhat = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat)
 
   n = size(A,2);
 
-  gamma = 1e-3;       % the reconstruction is sensitive to the weight of the regularizer (for 64x64 gamma=3e-3 seems to work)
+  gamma = 5e-4;       % the reconstruction is sensitive to the weight of the regularizer (for 64x64 gamma=3e-3 seems to work)
   Psy   = inv(getWaveletmatrices(pram.Ny,pram.Nx));
 
 %    w = diag(sqrt(1./(y+1)));
@@ -35,7 +35,7 @@ function Xhat = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat)
   L2sum = sqrt(L1sum); % Target of least square estimation based on Poisson statistics
   eps = L2sum*1.5;
 
-  cvx_begin 
+  cvx_begin quiet
       variable x(n)
       minimize(norm(w.*(A*x-y),2) + gamma*norm(Psy*x,1))        
 

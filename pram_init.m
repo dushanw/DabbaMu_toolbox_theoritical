@@ -6,6 +6,7 @@ function pram = pram_init()
   pram.pattern_typ  = 'dmd_exp_tfm_beads_8';            % {'dmd_sim_rnd',
                                                         %  'dmd_exp',
                                                         %  'dmd_exp_tfm',
+                                                        %  'dmd_exp_tfm_beads_3',
                                                         %  'dmd_exp_tfm_beads_4',
                                                         %  'dmd_exp_tfm_beads_8',
                                                         %  'wgd_sim',
@@ -17,10 +18,10 @@ function pram = pram_init()
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
   
   %% data size parameters
-  pram.Nx      = 256;
-  pram.Ny      = 256;
+  pram.Nx      = 64;
+  pram.Ny      = 64;
   pram.Nc      = 1;
-  pram.Nt      = 200;
+  pram.Nt      = 128;
 
   %% compression parameters
   pram.compression_gen = 256;
