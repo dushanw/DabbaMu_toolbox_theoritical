@@ -9,15 +9,17 @@ addpath('./_ExtPatternsets/')
 pram  = pram_init(); 
 % X   = f_get_dataset(pram);
 
-% pattern_typ_list  = {'dmd_exp_tfm_beads_3', 'dmd_exp_tfm_beads_4','dmd_exp_tfm_beads_8'};
-% Nx_list           = [64 128 256 326];
-% Nt_list           = [64 128 245];
-
+gamma             = 5e-4;
+wname             = 'db4';
 pattern_typ_list  = {'dmd_exp_tfm_beads_3', 'dmd_exp_tfm_beads_4','dmd_exp_tfm_beads_8'};
-Nx_list           = [32 64];
-Nt_list           = [64 128];
+Nx_list           = [64 128 256];
+Nt_list           = [64 128 245];
 
-savepath      = ['./__results/' date '/'];
+% pattern_typ_list  = {'dmd_exp_tfm_beads_8'};
+% Nx_list           = [64];
+% Nt_list           = [128];
+
+savepath      = ['./__results/' date '_test_wavelets/'];
 mkdir(savepath)
 
 for ii = 1:length(pattern_typ_list)
@@ -38,7 +40,7 @@ for ii = 1:length(pattern_typ_list)
       [dlnet_fwd, Yhat, X_refs] = f_gen_fwd(pram);
 
       Xhat_noPr = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat,X_refs.X0);
-      Xhat_wlPr = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat);      % wavelet prior
+      Xhat_wlPr = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat,gamma,wname);      % wavelet prior
       
       figure('units','normalized','outerposition',[0 0 1 1])          
       imagesc([rescale(Xhat_noPr) rescale(Xhat_wlPr) ;...
