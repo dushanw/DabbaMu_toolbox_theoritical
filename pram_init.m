@@ -3,7 +3,9 @@ function pram = pram_init()
 
   %% names
   pram.mic_typ      = 'DMD';                            % {'DMD','WGD'}
-  pram.pattern_typ  = 'dmd_exp_tfm_beads_8';            % {'dmd_sim_rnd',
+  pram.pattern_typ  = 'dmd_exp_tfm_beads_7sls_20201219';% {'dmd_exp_tfm_beads_7sls_20201219',
+                                                        %  'dmd_exp_tfm_mouse20201219',  
+                                                        %  'dmd_sim_rnd',
                                                         %  'dmd_exp',
                                                         %  'dmd_exp_tfm',
                                                         %  'dmd_exp_tfm_beads_3',
@@ -18,8 +20,8 @@ function pram = pram_init()
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
   
   %% data size parameters
-  pram.Nx      = 64;
-  pram.Ny      = 64;
+  pram.Nx      = 128;
+  pram.Ny      = 128;
   pram.Nc      = 1;
   pram.Nt      = 128;
 
