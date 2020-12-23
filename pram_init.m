@@ -20,8 +20,8 @@ function pram = pram_init()
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
   
   %% data size parameters
-  pram.Nx      = 64;
-  pram.Ny      = 64;
+  pram.Nx      = 128;
+  pram.Ny      = 128;
   pram.Nc      = 1;
   pram.Nt      = 128;
 
