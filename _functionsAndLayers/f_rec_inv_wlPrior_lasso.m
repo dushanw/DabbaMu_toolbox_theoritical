@@ -53,11 +53,15 @@ disp(['Lasso done! | t = ' num2str(toc) '[s]'])
   Xhat = reshape(x,pram.Ny,pram.Nx,size(x,2));
   
   % show reconstruction
-  implay(rescale(Xhat));
+  try
+    implay(rescale(Xhat));  
 %   imagesc(imtile(cat(3,rescale(Xhat), ...
 %                        rescale(imresize(Yhat(:,:,1,:),[pram.Ny pram.Nx],'nearest'))...
 %                 )));
-%  axis image  
+%  axis image
+  catch
+    disp('cannot display results')
+  end
 end
 
 

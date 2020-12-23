@@ -7,6 +7,9 @@ addpath(genpath('./_functionsAndLayers/'))
 addpath('./_Datasets/')
 addpath('./_ExtPatternsets/')
 
+% setup cvx for gpu
+% run('../_toolkits/cvx/cvx_startup.m')
+
 pram  = pram_init(); 
 % X   = f_get_dataset(pram);
 
