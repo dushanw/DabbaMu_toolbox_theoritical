@@ -1,6 +1,6 @@
 % 20181107 by Dushan N. Wadduwage
 
-function Xhat = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat,gamma,wname)
+function Xhat = f_rec_inv_wlPrior(pram,Ex,Yhat,gamma,wname)
 
   % parameters
   if isempty(gamma) 
@@ -11,7 +11,7 @@ function Xhat = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat,gamma,wname)
   end
   
   % make double for sparse;
-  Ex    = double(dlnet_fwd.Layers(2).E);
+  Ex    = double(Ex);
   Yhat  = double(Yhat);
 
   % make A
@@ -88,7 +88,7 @@ function A_waverec2 = getWaveletmatrices(h,w,wname)
   [c s]       = wavedec2(X,2,wname);
   A_waverec2  = sparse(h*w,length(c));
 
-  for i=1:length(c)
+  parfor i=1:length(c)
     c1{i}    = zeros(size(c));
     c1{i}(i) = 1;
     A_waverec2(:,i)=sparse(reshape(waverec2(c1{i},s,wname),[h*w,1])); 

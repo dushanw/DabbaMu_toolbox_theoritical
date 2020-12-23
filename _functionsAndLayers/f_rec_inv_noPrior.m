@@ -2,10 +2,10 @@
 % Reconstruction by solving the liner system with a psudo inverse
 % Yhat = AX => Xhat = A\Yhat
 
-function Xhat = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat,X0)
+function Xhat = f_rec_inv_noPrior(pram,Ex,Yhat,X0)
   
   % make double for sparse;
-  Ex    = double(dlnet_fwd.Layers(2).E);
+  Ex    = double(Ex);
   Yhat  = double(Yhat);
 
   % make A
