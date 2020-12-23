@@ -24,7 +24,7 @@ fileNameStem          = sprintf('%s_Ny%d_Nx%d_Nt%d',pram.pattern_typ,pram.Ny,pra
 disp(fileNameStem)
 
 %% start normal code here
-[dlnet_fwd, Yhat, X_refs] = f_gen_fwd(pram);
+[dlnet_fwd, E, Yhat, X_refs] = f_gen_fwd(pram);
 
 Xhat_noPr = f_rec_inv_noPrior(pram,dlnet_fwd,Yhat,X_refs.X0);
 Xhat_wlPr = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat,gamma,wname);      % wavelet prior

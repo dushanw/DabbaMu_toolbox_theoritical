@@ -1,5 +1,5 @@
 
-function [dlnet_fwd, Y_exp, X0] = f_gen_fwd(pram)
+function [dlnet_fwd, E, Y_exp, X0] = f_gen_fwd(pram)
 
   Illum             = ones([pram.Ny pram.Nx]);               % illumination 
   [psf_ex, psf_em]  = f_get_psfs(pram);           % psfs

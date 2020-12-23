@@ -38,7 +38,7 @@ function Xhat = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat,gamma,wname)
   L2sum = sqrt(L1sum); % Target of least square estimation based on Poisson statistics
   eps   = L2sum*1.5;
 
-%   %% optimization over x      
+  %% optimization over x      
 %   Psy   = inv(getWaveletmatrices(pram.Ny,pram.Nx,wname));
 %   n     = size(A,2);
 %   cvx_begin quiet
@@ -52,10 +52,13 @@ function Xhat = f_rec_inv_wlPrior(pram,dlnet_fwd,Yhat,gamma,wname)
 
   %% optimization over alpha  
   Psy   = getWaveletmatrices(pram.Ny,pram.Nx,wname);
-  n = size(Psy,2);
+  n     = size(Psy,2);
+  
+  AxPsy = A*Psy;
   cvx_begin 
       variable alph(n)
-      minimize(norm(w.*(A*Psy*alph-y),2) + gamma*norm(alph,1))
+      % minimize(norm(w.*(A*Psy*alph-y),2) + gamma*norm(alph,1))
+      minimize(norm(w.*(AxPsy*alph-y),2) + gamma*norm(alph,1))
 
       subject to
           Psy*alph >= 0;
