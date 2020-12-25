@@ -15,7 +15,7 @@ pram  = pram_init();
 
 gamma                 = 5e-4;
 wname                 = 'db4';
-savepath              = ['./__results/' date '_test_wavelets/'];
+savepath              = ['./__results/' date '_tfm_mouse_20201224/'];
 mkdir(savepath)
 
 %% set prams 
@@ -28,11 +28,10 @@ disp(fileNameStem)
 %% reconstruct and save results
 for i=1:size(Y_exp,4)
   i
-  tic
   Xhat_noPr(:,:,:,i)          = f_rec_inv_noPrior(pram,E,Y_exp(:,:,:,i),X_refs.Ywf0(:,:,:,i));                    % no-prior 
  [Xhat_wlPr(:,:,:,i) FitInfo] = f_rec_inv_wlPrior_lasso(pram,E,Y_exp(:,:,:,i),gamma,wname,0.005);  % wavelet-prior matlab lasso
- toc
 end
+save([savepath 'reconstructed_' fileNameStem '.mat'],'Xhat_noPr','Xhat_wlPr')
 
 for i=1:size(Y_exp,4)
   figure('units','normalized','outerposition',[0 0 1 1])          
