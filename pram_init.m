@@ -3,7 +3,9 @@ function pram = pram_init()
 
   %% names
   pram.mic_typ      = 'DMD';                            % {'DMD','WGD'}
-  pram.pattern_typ  = 'dmd_exp_tfm_beads_7sls_20201219';% {'dmd_exp_tfm_beads_7sls_20201219',
+  pram.pattern_typ  = 'dmd_exp_tfm_mouse_20201224';     % {'dmd_exp_tfm_mouse_20201224',
+                                                        %  'dmd_exp_tfm_mouse_20201222',
+                                                        %  'dmd_exp_tfm_beads_7sls_20201219',
                                                         %  'dmd_exp_tfm_mouse20201219',  
                                                         %  'dmd_sim_rnd',
                                                         %  'dmd_exp',
@@ -23,7 +25,7 @@ function pram = pram_init()
   pram.Nx      = 128;
   pram.Ny      = 128;
   pram.Nc      = 1;
-  pram.Nt      = 128;
+  pram.Nt      = 250;
 
   %% compression parameters
   pram.compression_gen = 256;

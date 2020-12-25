@@ -1,7 +1,7 @@
 % 20181107 by Dushan N. Wadduwage
 % 20201223 edited by DNW to improve speed using GPU and fmin
 
-function Xhat = f_rec_inv_wlPrior_lasso(pram,Ex,Yhat,gamma,wname)
+function [Xhat FitInfo] = f_rec_inv_wlPrior_lasso(pram,Ex,Yhat,gamma,wname,lasso_lambda)
 
 tic
 disp(['Preprocessing inputs | t = ' num2str(toc) '[s]'])
@@ -44,9 +44,15 @@ disp(['Generating wavelet matrix | t = ' num2str(toc) '[s]'])
   AxPsy = single(full(A*Psy));
   Psy   = single(full(Psy));
   y     = single(y);
+
 disp(['Lasso started | t = ' num2str(toc) '[s]'])
-  alpha = lasso(AxPsy,y,'Options',statset('UseParallel',true)); 
+  if ~isempty(lasso_lambda)
+    [alpha FitInfo] = lasso(AxPsy,y,'Options',statset('UseParallel',true),'Lambda',lasso_lambda); 
+  else
+    [alpha FitInfo] = lasso(AxPsy,y,'Options',statset('UseParallel',true));
+  end
 disp(['Lasso done! | t = ' num2str(toc) '[s]'])
+
   x     = Psy*alpha;
   x(x<0)= 0;
   
@@ -54,7 +60,7 @@ disp(['Lasso done! | t = ' num2str(toc) '[s]'])
   
   % show reconstruction
   try
-    implay(rescale(Xhat));  
+%    implay(Xhat./max(max(Xhat,[],1),[],2));  
 %   imagesc(imtile(cat(3,rescale(Xhat), ...
 %                        rescale(imresize(Yhat(:,:,1,:),[pram.Ny pram.Nx],'nearest'))...
 %                 )));

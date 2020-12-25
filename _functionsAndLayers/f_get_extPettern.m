@@ -132,6 +132,46 @@ function [E Y_exp X_refs] = f_get_extPettern(pram)
       
       X_refs.X0     = Xwf0;      
       X_refs.Y_avg  = Y_avg;
+    case 'dmd_exp_tfm_mouse_20201222'
+      load('./_ExtPatternsets/dmd_exp_tfm_mouse_20201222.mat');
+      E     = imresize(single(Data.Ex1               (:,:,1:pram.Nt)) ,[pram.Ny pram.Nx]);
+      Y_exp = imresize(single(Data.anml1_r1_300um    (:,:,1:pram.Nt)) ,[pram.Ny pram.Nx]);      
+      Xwf0  = imresize(single(Data.anml1_r1_300um_wf0(:,:,1:end))     ,[pram.Ny pram.Nx]);
+      
+      % normalize
+      Y_avg = mean(Y_exp,3);
+      Y_avg = Y_avg ./ max (Y_avg(:)  );
+      
+      E     = E     -  mean(E    ,   3);
+      E     = E     ./ max (E    ,[],3);
+      
+      Y_exp = Y_exp -  mean(Y_exp,   3);
+      Y_exp = Y_exp ./ max (Y_exp(:)  ); 
+      
+      Xwf   = Xwf0  ./ max (Xwf0(:)   );
+      
+      X_refs.X0     = Xwf0;      
+      X_refs.Y_avg  = Y_avg;
+    case 'dmd_exp_tfm_mouse_20201224'
+      load('./_ExtPatternsets/dmd_exp_tfm_mouse_20201224.mat');
+      E     = imresize(single(Data.Ex                (:,:,1:pram.Nt)) ,[pram.Ny pram.Nx]);
+      Y_exp = imresize(single(Data.anml2_r2_400um    (:,:,1:pram.Nt)) ,[pram.Ny pram.Nx]);
+      Xwf0  = imresize(single(Data.anml2_r2_400um_wf0(:,:,1:end))     ,[pram.Ny pram.Nx]);
+      
+      % normalize
+      Y_avg = mean(Y_exp,3);
+      Y_avg = Y_avg ./ max (Y_avg(:)  );
+      
+      E     = E     -  mean(E    ,   3);
+      E     = E     ./ max (E    ,[],3);
+      
+      Y_exp = Y_exp -  mean(Y_exp,   3);
+      Y_exp = Y_exp ./ max (Y_exp(:)  ); 
+      
+      Xwf   = Xwf0  ./ max (Xwf0(:)   );
+      
+      X_refs.X0     = Xwf0;      
+      X_refs.Y_avg  = Y_avg;
   end
 
 end
