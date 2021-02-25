@@ -12,13 +12,17 @@ pram            = pram_init_sim();
 X               = f_get_dataset(pram);
 
 %% initiate and train generator using AUTOENCODER
-lgraph_autoEnc  = f_gen_linAutoEnc(pram)
+lgraph_autoEnc  = f_gen_linAutoEnc(pram);
 % lgraph_autoEnc  = f_gen_stdAutoEnc(pram);
-% pram.excEnv     = 'multi-gpu'; 
-pram.excEnv     = 'cpu'; 
+pram.excEnv     = 'multi-gpu';
+
+A_start         = lgraph_autoEnc.Layers(2).Weights;
 
 trOptions       = f_set_training_options(pram,X.Val,X.Val);
 net_autoEnc     = trainNetwork(X.Train,X.Train,lgraph_autoEnc,trOptions);
+
+A_trained       = net_autoEnc.Layers(2).Weights;
+
 dlnet_gen       = f_get_gen(pram,net_autoEnc);
 
 XhatTest_ae     = predict(net_autoEnc,X.Val);
