@@ -3,8 +3,9 @@ function [E Y_exp X_refs] = f_get_extPettern(pram)
 
   switch pram.pattern_typ
     case 'dmd_sim_rnd'
-      E     = rand([pram.Ny pram.Nx pram.Nt]); % for DMDs
+      E     = rand([pram.Ny pram.Nx pram.Nt])>0.5; % for DMDs
       Y_exp = [];
+      X_refs= [];
     case 'wgd_sim'
       load wgd_simMMI.mat
       E     = E0(size(E0,1)/2-pram.Ny/2+1:end,size(E0,2)/2-pram.Nx/2+1:end,:);

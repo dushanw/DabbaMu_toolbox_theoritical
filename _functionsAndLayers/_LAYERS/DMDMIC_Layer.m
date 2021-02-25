@@ -49,7 +49,7 @@ classdef DMDMIC_Layer < nnet.layer.Layer
                               'DataFormat','SSCB');                    % averaged image
           Y         = Y.*(layer.binR^2);                               % multiply by pixels in the bin for sum image  
 
-%           % Add noise                        
+%           % Add noise                   
 %           N_norm    = normrnd(0,1,size(Y));
 %           N_read    = normrnd(layer.mu_rd,layer.sd_rd,size(Y));
 % 

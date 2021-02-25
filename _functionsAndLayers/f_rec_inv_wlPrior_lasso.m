@@ -1,7 +1,7 @@
 % 20181107 by Dushan N. Wadduwage
 % 20201223 edited by DNW to improve speed using GPU and fmin
 
-function [Xhat FitInfo] = f_rec_inv_wlPrior_lasso(pram,Ex,Yhat,gamma,wname,lasso_lambda)
+function [Xhat FitInfo] = f_rec_inv_wlPrior_lasso(pram,Ex,Yhat,emConvSPSF,gamma,wname,lasso_lambda)
 
 tic
 disp(['Preprocessing inputs | t = ' num2str(toc) '[s]'])
@@ -17,13 +17,10 @@ disp(['Preprocessing inputs | t = ' num2str(toc) '[s]'])
   % make double for sparse;
   Ex    = double(Ex);
   Yhat  = double(Yhat);
-
+  
   % make A
-  i_vec = [1:pram.Ny*pram.Nx*pram.Nt]';
-  j_vec = repmat(1:pram.Ny*pram.Nx,[1 pram.Nt])';
-  s_vec = Ex(:);
-  A = sparse(i_vec,j_vec,s_vec,pram.Ny*pram.Nx*pram.Nt,pram.Ny*pram.Nx);
-
+  A     = subf_genA(pram,emConvSPSF,Ex);
+  
 %  y(find(y(:)<0))=0;  % no negative measurements 
   y = Yhat(:);
   y = y./max(y);
@@ -41,20 +38,21 @@ disp(['Preprocessing inputs | t = ' num2str(toc) '[s]'])
 disp(['Generating wavelet matrix | t = ' num2str(toc) '[s]'])
   Psy   = getWaveletmatrices(pram.Ny,pram.Nx,wname);
   
-  AxPsy = single(full(A*Psy));
+  A_x_Psy = full(A) * Psy;
+  
   Psy   = single(full(Psy));
   y     = single(y);
 
 disp(['Lasso started | t = ' num2str(toc) '[s]'])
   if ~isempty(lasso_lambda)
-    [alpha FitInfo] = lasso(AxPsy,y,'Options',statset('UseParallel',true),'Lambda',lasso_lambda); 
+    [alpha FitInfo] = lasso(A_x_Psy,y,'Options',statset('UseParallel',true),'Lambda',lasso_lambda); 
   else
-    [alpha FitInfo] = lasso(AxPsy,y,'Options',statset('UseParallel',true));
+    [alpha FitInfo] = lasso(A_x_Psy,y,'Options',statset('UseParallel',true));
   end
 disp(['Lasso done! | t = ' num2str(toc) '[s]'])
 
   x     = Psy*alpha;
-  x(x<0)= 0;
+%  x(x<0)= 0;
   
   Xhat = reshape(x,pram.Ny,pram.Nx,size(x,2));
   
@@ -68,6 +66,23 @@ disp(['Lasso done! | t = ' num2str(toc) '[s]'])
   catch
     disp('cannot display results')
   end
+end
+
+function A = subf_genA(pram,emConvSPSF,Ex)
+
+  Apsf    = sparse(f_genConvMat(emConvSPSF,pram.Ny,pram.Nx));
+  AApsf   = [];
+  for i=1:size(Ex,3)
+    i
+    AApsf = blkdiag(AApsf,Apsf);      
+  end
+    
+  i_vec = [1:pram.Ny*pram.Nx*pram.Nt]';
+  j_vec = repmat(1:pram.Ny*pram.Nx,[1 pram.Nt])';
+  s_vec = Ex(:);
+  AEx   = sparse(i_vec,j_vec,s_vec,pram.Ny*pram.Nx*pram.Nt,pram.Ny*pram.Nx);
+
+  A     = AApsf * AEx;       
 end
 
 
