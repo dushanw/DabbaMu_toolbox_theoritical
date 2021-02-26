@@ -15,7 +15,11 @@ pram.dropPeriod	= 200;
 X               = f_get_dataset(pram);
 
 %% initiate and train generator using AUTOENCODER
+pram.encType      = 'fc_rnd';
 pram.encType      = 'fc_rnd_fixed';
+pram.encType      = 'fc_had';
+pram.encType      = 'fc_had_fixed';
+
 
 lgraph_autoEnc  = f_gen_linAutoEnc(pram);
 % lgraph_autoEnc  = f_gen_stdAutoEnc(pram);

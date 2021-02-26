@@ -20,7 +20,11 @@ function pram = pram_init_sim()
                                                         %  'andrewCells_fociW3_63x_maxProj',
                                                         %  'andrewCells_dapi_20x_maxProj',}
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
-  pram.encType      = 'fc_rnd';                         % {'fc_rnd','fc_rnd_fixed','conv'}  
+  pram.encType      = 'fc_rnd';                         % {'fc_rnd',
+                                                        %  'fc_rnd_fixed',
+                                                        %  'fc_had',
+                                                        %  'fc_had_fixed',
+                                                        %  'conv'}  
   %% data size parameters
   pram.dx0     = 0.33;                                  % original pixel size of image before resizeing to Nx Ny
   
