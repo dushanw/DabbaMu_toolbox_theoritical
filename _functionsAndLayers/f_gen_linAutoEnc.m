@@ -91,7 +91,7 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
   %% auto encoder
   layersAutoEnc   = [
           layersEncoder
-          gaussNoiseLayer('noise',pram.avgCounts)
+          gaussNoiseLayer('noise',sqrt(pram.avgCounts))
           layersGenerator
           regressionLayer('Name','out')
                     ];
