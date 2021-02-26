@@ -41,6 +41,9 @@ function pram = pram_init_sim()
   pram.Ncompressed_gen = pram.Nx*pram.Ny/pram.compression_gen;            % dim non-linear feature space
   pram.Ncompressed_fwd = pram.Nx*pram.Ny/(pram.Nt*pram.compression_fwd);  % dim measurement space
 
+  %% power parameters
+  pram.avgCounts       = 100;                        % the number of average counts. See noise layer for usage  
+  
   %% camera parameters
   pram.amp     = 1e8;                                % scaling factor from measured images to images in [0 1]
   pram.mu_rd   = 100;

@@ -15,9 +15,9 @@ pram.dropPeriod	= 200;
 X               = f_get_dataset(pram);
 
 %% initiate and train generator using AUTOENCODER
-pram.encType      = 'fc_rnd';
-pram.encType      = 'fc_rnd_fixed';
-pram.encType      = 'fc_had';
+%pram.encType      = 'fc_rnd';
+%pram.encType      = 'fc_rnd_fixed';
+%pram.encType      = 'fc_had';
 pram.encType      = 'fc_had_fixed';
 
 
@@ -32,12 +32,10 @@ net_autoEnc     = trainNetwork(X.Train,X.Train,lgraph_autoEnc,trOptions);
 
 A_trained       = net_autoEnc.Layers(2).Weights;
 
-dlnet_gen       = f_get_gen(pram,net_autoEnc);
-
+%% test trained network
 XhatTest_ae     = predict(net_autoEnc,X.Val);
 imagesc(imtile([X.Val XhatTest_ae]));axis image;colorbar
 
-XhatTest        = predict(dlnet_gen,dlarray(10*rand(1,1,pram.Ncompressed_gen,100),'SSCB'));
-imagesc(imtile([XhatTest.extractdata]));axis image;colorbar
+
 
 
