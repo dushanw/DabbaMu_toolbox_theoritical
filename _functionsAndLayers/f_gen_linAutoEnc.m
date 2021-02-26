@@ -83,6 +83,7 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
 end
 
 function weights = subf_wi_rand(sz)  
+  rng(1);
   weights = rand(sz);
 end
 
