@@ -33,11 +33,23 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
           layersEncoder
           convolution2dLayer(filterSize,Ncompressed,'Name',sprintf('enc_conv%d',i+1))
           ];
-    case 'fc'
+    case 'fc_rnd'
       layersEncoder   = [
           imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
-          fullyConnectedLayer(Ncompressed,'Name','enc_fc','Weights',subf_wi_rand([Ncompressed, Ny*Nx*Nc]))
-          ];    
+          fullyConnectedLayer(Ncompressed,'Name','enc_fc',...
+                              'Weights',subf_wi_rand([Ncompressed, Ny*Nx*Nc]),...
+                              'Bias',zeros(Ncompressed,1),...                              
+                              'BiasLearnRateFactor',0)
+          ];        
+    case 'fc_rnd_fixed'
+      layersEncoder   = [
+          imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
+          fullyConnectedLayer(Ncompressed,'Name','enc_fc',...
+                              'Weights',subf_wi_rand([Ncompressed, Ny*Nx*Nc]),...
+                              'Bias',zeros(Ncompressed,1),...
+                              'WeightLearnRateFactor',0,...
+                              'BiasLearnRateFactor',0)
+          ];        
   end
 
   %% Gen        

@@ -9,9 +9,14 @@ addpath('./_Datasets/')
 addpath('./_ExtPatternsets/')
 
 pram            = pram_init_sim(); 
+pram.maxEpochs  = 1000;
+pram.dropPeriod	= 200;
+
 X               = f_get_dataset(pram);
 
 %% initiate and train generator using AUTOENCODER
+pram.encType      = 'fc_rnd_fixed';
+
 lgraph_autoEnc  = f_gen_linAutoEnc(pram);
 % lgraph_autoEnc  = f_gen_stdAutoEnc(pram);
 pram.excEnv     = 'multi-gpu';
