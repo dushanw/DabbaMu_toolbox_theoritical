@@ -87,17 +87,32 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
           transposedConv2dLayer(filterSize,Nc,'Stride',2,'Cropping',1,'Name',sprintf('gen_tconv%d',i+1))
           tanhLayer('Name','gen_tanh')];
 
-
   %% auto encoder
-  layersAutoEnc   = [
-          layersEncoder
-          gaussNoiseLayer('noise',sqrt(pram.avgCounts))
-          layersGenerator
-          regressionLayer('Name','out')
-                    ];
+  switch pram.encNoise
+    case 'none'
+      layersAutoEnc   = [
+              layersEncoder              
+              layersGenerator
+              regressionLayer('Name','out')
+                        ];      
+    case 'gauss'    
+      layersAutoEnc   = [
+              layersEncoder
+              gaussNoiseLayer('noise',sqrt(pram.avgCounts))
+              layersGenerator
+              regressionLayer('Name','out')
+                        ];
+    case 'poiss'
+      layersAutoEnc   = [
+              layersEncoder
+              aproxPoissonLayer('noise',sqrt(pram.avgCounts))
+              layersGenerator
+              regressionLayer('Name','out')
+                        ];
+  end
+      
 
-  lgraphAutoEnc   = layerGraph(layersAutoEnc);
-   
+  lgraphAutoEnc   = layerGraph(layersAutoEnc);   
 end
 
 function weights = subf_wi_rand(sz)  

@@ -25,6 +25,8 @@ function pram = pram_init_sim()
                                                         %  'fc_had',
                                                         %  'fc_had_fixed',
                                                         %  'conv'}  
+  pram.encNoise     = 'poiss';                          % {'none','gauss','poiss'}
+  
   %% data size parameters
   pram.dx0     = 0.33;                                  % original pixel size of image before resizeing to Nx Ny
   
@@ -33,7 +35,6 @@ function pram = pram_init_sim()
   pram.Nc      = 1;
   pram.Nt      = 64;
   
-
   %% compression parameters
   pram.compression_gen = 8;
   pram.compression_fwd = 1/pram.Nt;

@@ -1,25 +1,25 @@
-%% observations (delete after addressing)
-% 20200909: the genPrior network needs improvement. It seems to work better without gen prior.
-% grad discent optimizer needs to be more sofisticated specissly the finite difference
+
 
 %%
 clc; clear all; close all
-addpath('./_functionsAndLayers/')
+addpath(genpath('./_functionsAndLayers/'))
 addpath('./_Datasets/')
 addpath('./_ExtPatternsets/')
 
 pram            = pram_init_sim(); 
 pram.maxEpochs  = 1000;
 pram.dropPeriod	= 200;
+pram.avgCounts  = 10;
 
 X               = f_get_dataset(pram);
 
 %% initiate and train generator using AUTOENCODER
 %pram.encType      = 'fc_rnd';
-%pram.encType      = 'fc_rnd_fixed';
+pram.encType      = 'fc_rnd_fixed';
 %pram.encType      = 'fc_had';
-pram.encType      = 'fc_had_fixed';
+%pram.encType      = 'fc_had_fixed';
 
+pram.encNoise     = 'poiss';
 
 lgraph_autoEnc  = f_gen_linAutoEnc(pram);
 % lgraph_autoEnc  = f_gen_stdAutoEnc(pram);
@@ -32,9 +32,11 @@ net_autoEnc     = trainNetwork(X.Train,X.Train,lgraph_autoEnc,trOptions);
 
 A_trained       = net_autoEnc.Layers(2).Weights;
 
+save(sprintf('~/Documents/tempData/net_autoEnc_%s_%g.mat',pram.encNoise,pram.avgCounts),'net_autoEnc','A_start','A_trained')
+
 %% test trained network
 XhatTest_ae     = predict(net_autoEnc,X.Val);
-imagesc(imtile([X.Val XhatTest_ae]));axis image;colorbar
+imagesc(imtile([rescale(X.Val) rescale(XhatTest_ae)]));axis image;colorbar
 
 
 

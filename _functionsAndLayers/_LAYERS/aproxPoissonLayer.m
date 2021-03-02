@@ -1,4 +1,4 @@
-classdef gaussNoiseLayer < nnet.layer.Layer    
+classdef aproxPoissonLayer < nnet.layer.Layer    
         
     properties
         avgLaserAmp
@@ -8,7 +8,7 @@ classdef gaussNoiseLayer < nnet.layer.Layer
     end
     
     methods
-        function layer = gaussNoiseLayer(name,avgLaserAmp)
+        function layer = aproxPoissonLayer(name,avgLaserAmp)
             layer.avgLaserAmp = avgLaserAmp;                  
             layer.Name        = name;                  
         end
