@@ -20,11 +20,12 @@ function pram = pram_init_sim()
                                                         %  'andrewCells_fociW3_63x_maxProj',
                                                         %  'andrewCells_dapi_20x_maxProj',}
   pram.psf_typ      = 'gaussian';                       % {'gaussian',...}
-  pram.encType      = 'fc_rnd_posNormWeights';          % {'fc_rnd',
+  pram.encType      = 'fc_rnd_posNormWeights_fixed';    % {'fc_rnd',
                                                         %  'fc_rnd_fixed',
                                                         %  'fc_had',
                                                         %  'fc_had_fixed',
                                                         %  'fc_rnd_posNormWeights'
+                                                        %  'fc_rnd_posNormWeights_fixed' 
                                                         %  'conv'}
                                                         
   pram.encNoise     = 'poiss';                          % {'none','gauss','poiss'}
