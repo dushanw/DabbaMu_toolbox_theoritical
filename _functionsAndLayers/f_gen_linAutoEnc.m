@@ -70,7 +70,7 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
     case 'fc_rnd_posNormWeights'
       layersEncoder   = [
           imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
-          projectAndReshape_posNormWeights_Layer(Ncompressed, Nc, 'enc_posNormFc', subf_wi_rand([Ncompressed, Ny*Nx*Nc]))
+          projectAndReshape_posNormWeights_Layer([1 1 Ncompressed], Nc, 'enc_posNormFc', subf_wi_rand([Ncompressed, Ny*Nx*Nc]))
           ];                
       
   end
