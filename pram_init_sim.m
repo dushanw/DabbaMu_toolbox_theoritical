@@ -39,7 +39,7 @@ function pram = pram_init_sim()
   pram.Nt      = 64;
   
   %% compression parameters
-  pram.compression_gen = 8;
+  pram.compression_gen = 64;
   pram.compression_fwd = 1/pram.Nt;
   
   pram.Ncompressed_gen = pram.Nx*pram.Ny/pram.compression_gen;            % dim non-linear feature space
