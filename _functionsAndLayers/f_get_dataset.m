@@ -8,8 +8,12 @@ function X = f_get_dataset(pram)
       
       XTrain  = XTrain - min(XTrain(:));
       XVal    = XVal - min(XVal(:));
-      XTest  = XTest - min(XTest(:)); 
+      XTest   = XTest - min(XTest(:)); 
 
+      XTrain  = XTrain/2;
+      XVal    = XVal/2;
+      XTest   = XTest/2;
+      
     case 'andrewCells_dapi_20x_maxProj'
       load('./_Datasets/andrewCells_dapi_20x_maxProj.mat')
       X0     = imresize(X_maxProj,0.5)+1;% +1 to get rid of the boder patches
@@ -42,10 +46,10 @@ function X = f_get_dataset(pram)
                          pram.Ny, pram.Nx,1,[]);
       ITest   = ITest(257:end,:);
                        
-      XTrain  = 2*(XTrain)/(avg_X*6);% scale to [0 2] range on average
-      XVal    = 2*(XVal)/(avg_X*6);
-      XTest   = 2*(XTest)/(avg_X*6);
-      ITest   = 2*(ITest)/(avg_X*6);
+      XTrain  = (XTrain)/(avg_X*6);% scale to [0 1] range on average
+      XVal    = (XVal)/(avg_X*6);
+      XTest   = (XTest)/(avg_X*6);
+      ITest   = (ITest)/(avg_X*6);
 
     case 'andrewCells_fociW3_63x_maxProj'
       load('./_Datasets/andrewCells_fociW3_63x_maxProj.mat')
@@ -84,10 +88,10 @@ function X = f_get_dataset(pram)
       max_X   = max(XTrain(:));
       avg_X   = mean(XTrain(:));  
                        
-      XTrain  = 2*(XTrain)/(avg_X*6);% scale to [0 2] range on average
-      XVal    = 2*(XVal)/(avg_X*6);
-      XTest   = 2*(XTest)/(avg_X*6);
-      ITest   = 2*(ITest)/(avg_X*6);
+      XTrain  = (XTrain)/(avg_X*6);% scale to [0 1] range on average
+      XVal    = (XVal)/(avg_X*6);
+      XTest   = (XTest)/(avg_X*6);
+      ITest   = (ITest)/(avg_X*6);
   end
   
   X.Train = imresize(XTrain,[pram.Ny pram.Nx]); 
