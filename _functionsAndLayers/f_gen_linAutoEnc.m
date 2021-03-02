@@ -41,6 +41,24 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
                               'Bias',zeros(Ncompressed,1),...                              
                               'BiasLearnRateFactor',0)
           ];        
+    case 'fc_had'            
+      layersEncoder   = [
+          imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
+          fullyConnectedLayer(Ncompressed,'Name','enc_fc',...
+                              'Weights',subf_wi_had([Ncompressed, Ny*Nx*Nc]),...
+                              'Bias',zeros(Ncompressed,1),...                              
+                              'BiasLearnRateFactor',0)
+          ];
+    case 'fc_rnd_posNormWeights'
+      layersEncoder   = [
+          imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
+          projectAndReshape_posNormWeights_Layer([1 1 Ncompressed], Nc,'enc_posNormFc', subf_wi_rand([Ncompressed, Ny*Nx*Nc]))
+          ];                        
+    case 'fc_had_posNormWeights'
+      layersEncoder   = [
+          imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
+          projectAndReshape_posNormWeights_Layer([1 1 Ncompressed], Nc,'enc_posNormFc', subf_wi_had([Ncompressed, Ny*Nx*Nc]))
+          ];                
     case 'fc_rnd_fixed'
       layersEncoder   = [
           imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
@@ -50,14 +68,6 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
                               'WeightLearnRateFactor',0,...
                               'BiasLearnRateFactor',0)
           ];                
-    case 'fc_had'            
-      layersEncoder   = [
-          imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
-          fullyConnectedLayer(Ncompressed,'Name','enc_fc',...
-                              'Weights',subf_wi_had([Ncompressed, Ny*Nx*Nc]),...
-                              'Bias',zeros(Ncompressed,1),...                              
-                              'BiasLearnRateFactor',0)
-          ];        
     case 'fc_had_fixed'
       layersEncoder   = [
           imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
@@ -66,16 +76,16 @@ function lgraphAutoEnc = f_gen_linAutoEnc(pram)
                               'Bias',zeros(Ncompressed,1),...
                               'WeightLearnRateFactor',0,...
                               'BiasLearnRateFactor',0)
-          ];   
-    case 'fc_rnd_posNormWeights'
-      layersEncoder   = [
-          imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
-          projectAndReshape_posNormWeights_Layer([1 1 Ncompressed], Nc,'enc_posNormFc', subf_wi_rand([Ncompressed, Ny*Nx*Nc]))
-          ];                
+          ];       
     case 'fc_rnd_posNormWeights_fixed'
       layersEncoder   = [
           imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
           projectAndReshape_posNormWeights_Layer_fixed([1 1 Ncompressed], Nc,'enc_posNormFc', subf_wi_rand([Ncompressed, Ny*Nx*Nc]))
+          ];                
+    case 'fc_had_posNormWeights_fixed'
+      layersEncoder   = [
+          imageInputLayer([Ny Nx Nc],'Normalization','none','Name','enc_in')
+          projectAndReshape_posNormWeights_Layer_fixed([1 1 Ncompressed], Nc,'enc_posNormFc', subf_wi_had([Ncompressed, Ny*Nx*Nc]))
           ];                
       
   end
@@ -128,7 +138,7 @@ end
 
 function weights = subf_wi_rand(sz)  
   rng(1);
-  weights = rand(sz);
+  weights = (rand(sz)-0.5)*2;
 end
 
 function weights = subf_wi_had(sz)  

@@ -52,7 +52,7 @@ classdef projectAndReshape_posNormWeights_Layer < nnet.layer.Layer
             %                 the mini-batch size.
 
             % Fully connect.
-            weights = (tanh(layer.Weights)+1)/2;
+            weights = (tanh(layer.Weights*3)+1)/2;
             bias = layer.Bias;
             X = fullyconnect(X,weights,bias,'DataFormat','SSCB');
             
